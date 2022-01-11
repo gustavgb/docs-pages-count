@@ -1,3 +1,7 @@
+function charToPages (n) {
+  return (Math.ceil(10 * parseInt(n) / 2400) / 10).toFixed(1)
+}
+
 function addPagesCount (mutationList) {
   mutationList.filter(m => m.type === 'childList').forEach(m => {
     m.addedNodes.forEach(node => {
@@ -9,14 +13,14 @@ function addPagesCount (mutationList) {
           if (characterCount) {
             const newRow = document.createElement('tr')
             if (characterCount.innerText.includes(' of ')) {
-              const pages = (parseInt(characterCount.innerText.split(' of ')[1]) / 2400).toFixed(1)
-              const selected = (parseInt(characterCount.innerText.split(' of ')[0]) / 2400).toFixed(1)
+              const pages = charToPages(characterCount.innerText.split(' of ')[1])
+              const selected = charToPages(characterCount.innerText.split(' of ')[0])
 
               newRow.innerHTML = `<td class="kix-documentmetricsdialog-row kix-documentmetricsdialog-counts">Academic pages</td><td class="kix-documentmetricsdialog-row kix-documentmetricsdialog-values">${selected} of ${pages}</td>`
 
               table.appendChild(newRow)
             } else {
-              const pages = (parseInt(characterCount.innerText) / 2400).toFixed(1)
+              const pages = charToPages(characterCount.innerText)
               newRow.innerHTML = `<td class="kix-documentmetricsdialog-row kix-documentmetricsdialog-counts">Academic pages</td><td class="kix-documentmetricsdialog-row kix-documentmetricsdialog-values">${pages}</td>`
             }
 
